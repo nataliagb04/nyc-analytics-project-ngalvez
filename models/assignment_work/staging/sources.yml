@@ -89,3 +89,86 @@ sources:
             description: Y coordinate in NY State Plane projection system (NAD 83)
           - name: landmark
             description: Nearby landmark or point of interest
+      - name: source_nyc_open_restaurant_apps
+        description: Raw Open Restaurant Applications data
+        columns:
+          - name: objectid
+            description: Unique identifier for the record
+          - name: submitted_on
+            description: Date and time application was submitted
+          - name: last_modified
+            description: Date and time record was last modified
+          - name: restaurant_name
+            description: Name of the restaurant
+          - name: legal_business_name
+            description: Legal business name
+          - name: doing_business_as_dba
+            description: Doing business as name
+          - name: seating_interest_sidewalk_roadway_both
+            description: Seating interest type
+          - name: status
+            description: Current application status
+          - name: building_number
+            description: Building number of the restaurant location
+          - name: street
+            description: Street name of the restaurant location
+          - name: borough
+            description: NYC borough where restaurant is located
+          - name: zip_code
+            description: Zip code of the restaurant location
+          - name: latitude
+            description: Latitude coordinate
+          - name: longitude
+            description: Longitude coordinate
+          - name: approved_for_roadway_seating
+            description: Indicates whether roadway seating was approved
+          - name: approved_for_sidewalk_seating
+            description: Indicates whether sidewalk seating was approved
+          - name: bbl
+            description: Borough block and lot number
+          - name: bin
+            description: Building identification number
+          - name: business_address
+            description: Street address of the restaurant
+          - name: census_tract
+            description: Census tract of the restaurant location
+          - name: community_board
+            description: NYC Community Board district number
+          - name: council_district
+            description: NYC Council district number
+          - name: food_service_establishment
+            description: Indicates whether location is a food service establishment
+          - name: globalid
+            description: Global identifier for the record
+          - name: healthcompliance_terms
+            description: Health compliance terms
+          - name: landmark_district_or_building
+            description: Indicates whether location is in a landmark district or building
+          - name: landmarkdistrict_terms
+            description: Landmark district terms
+          - name: nta
+            description: Neighborhood Tabulation Area
+          - name: qualify_alcohol
+            description: Indicates whether business qualifies for alcohol
+          - name: roadway_dimensions_area
+            description: Area of roadway seating dimensions
+          - name: roadway_dimensions_length
+            description: Length of roadway seating dimensions
+          - name: roadway_dimensions_width
+            description: Width of roadway seating dimensions
+          - name: seating_interest_sidewalk
+            description: Indicates interest in sidewalk seating
+          - name: sidewalk_dimensions_area
+            description: Area of sidewalk seating dimensions
+          - name: sidewalk_dimensions_length
+            description: Length of sidewalk seating dimensions
+          - name: sidewalk_dimensions_width
+            description: Width of sidewalk seating dimensions
+          - name: sla_license_type
+            description: SLA license type
+          - name: sla_serial_number
+            description: SLA serial number
+          - name: time_of_submission
+            description: Time of submission
+          - name: zip
+            description: Zip code

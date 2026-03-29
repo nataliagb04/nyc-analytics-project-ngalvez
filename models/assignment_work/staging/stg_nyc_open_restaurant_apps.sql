@@ -81,8 +81,6 @@ cleaned AS (
     FROM source
 
     WHERE objectid IS NOT NULL
-      AND submitted_on IS NOT NULL
-      AND borough IS NOT NULL
 
     QUALIFY ROW_NUMBER() OVER (
         PARTITION BY objectid

@@ -38,3 +38,21 @@ models:
 
        dot_311:
          +materialized: table
+  
+   group8_project:
+     staging:
+       +materialized: table
+       +schema: cis9440_group8_staging
+
+     marts:
+       +materialized: table
+       +schema: cis9440_group8_marts
+
+       shared:
+         +materialized: table
+
+       dot_311:
+         +materialized: table
+
+       collisions:
+         +materialized: table

@@ -38,8 +38,8 @@ joined AS (
     SELECT
         stg.collision_id,
 
-        dd.date_key,
-        dt.time_key,
+        dd.date_key AS accident_date_key,
+        dt.time_key AS accident_time_key,
         dl.location_key,
 
         cf1.contributing_factor_vehicle_key AS contributing_factor_key_v1,
@@ -113,6 +113,6 @@ joined AS (
 )
 
 SELECT
-    {{ dbt_utils.generate_surrogate_key(['collision_id']) }} AS collision_fact_key,
+    {{ dbt_utils.generate_surrogate_key(['collision_id']) }} AS collision_key,
     *
 FROM joined

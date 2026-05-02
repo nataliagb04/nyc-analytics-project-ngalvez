@@ -39,5 +39,9 @@ distinct_types AS (
 
 SELECT
     {{ dbt_utils.generate_surrogate_key(['vehicle_type']) }} AS vehicle_key,
-    vehicle_type
+    CASE
+        WHEN vehicle_type IS NULL THEN NULL
+        WHEN UPPER(TRIM(vehicle_type)) IN ('', 'UNKNOWN', 'UNKNOW', 'UNK') THEN 'Unknown'
+        ELSE INITCAP(TRIM(vehicle_type))
+    END AS vehicle_type
 FROM distinct_types

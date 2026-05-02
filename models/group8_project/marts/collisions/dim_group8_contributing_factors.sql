@@ -31,7 +31,16 @@ WITH factors AS (
 distinct_factors AS (
 
     SELECT DISTINCT
-        NULLIF(TRIM(contributing_factor_for_vehicle), '') AS contributing_factor_for_vehicle
+        CASE
+            WHEN contributing_factor_for_vehicle IS NULL THEN NULL
+            WHEN TRIM(contributing_factor_for_vehicle) = '' THEN NULL
+            WHEN UPPER(TRIM(contributing_factor_for_vehicle)) IN ('1', '80') THEN NULL
+            WHEN UPPER(TRIM(contributing_factor_for_vehicle)) = 'ILLNES' THEN 'Illness'
+            WHEN UPPER(TRIM(contributing_factor_for_vehicle)) = 'REACTION TO OTHER UNINVOLVED VEHICLE' THEN 'Reaction to Uninvolved Vehicle'
+            WHEN UPPER(TRIM(contributing_factor_for_vehicle)) = 'DRUGS (ILLEGAL)' THEN 'Drugs (illegal)'
+            WHEN UPPER(TRIM(contributing_factor_for_vehicle)) = 'CELL PHONE (HAND-HELD)' THEN 'Cell Phone (hand-held)'
+            ELSE TRIM(contributing_factor_for_vehicle)
+        END AS contributing_factor_for_vehicle
     FROM factors
 
 )

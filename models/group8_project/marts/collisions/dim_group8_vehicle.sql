@@ -38,10 +38,20 @@ distinct_types AS (
 )
 
 SELECT
-    {{ dbt_utils.generate_surrogate_key(['vehicle_type']) }} AS vehicle_key,
-    CASE
-        WHEN vehicle_type IS NULL THEN NULL
-        WHEN UPPER(TRIM(vehicle_type)) IN ('', 'UNKNOWN', 'UNKNOW', 'UNK') THEN 'Unknown'
-        ELSE INITCAP(TRIM(vehicle_type))
-    END AS vehicle_type
-FROM distinct_types
+    {{ dbt_utils.generate_surrogate_key(['vehicle_type_clean']) }} AS vehicle_key,
+    vehicle_type_clean AS vehicle_type
+FROM (
+    SELECT DISTINCT
+        CASE
+            WHEN vehicle_type IS NULL THEN NULL
+            WHEN UPPER(TRIM(vehicle_type)) IN ('', 'UNKNOWN', 'UNKNOW', 'UNK') THEN 'Unknown'
+            ELSE INITCAP(TRIM(vehicle_type))
+        END AS vehicle_type_clean
+    FROM vehicle_types
+)
+WHERE vehicle_type_clean IS NULL
+   OR (
+        LENGTH(vehicle_type_clean) >= 3
+        AND NOT REGEXP_CONTAINS(vehicle_type_clean, r'^[0-9]+$')
+        AND NOT REGEXP_CONTAINS(vehicle_type_clean, r'^[[:punct:]]+$')
+   )

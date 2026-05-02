@@ -45,6 +45,8 @@ joined AS (
 
         dd_created.date_key AS created_date_key,
         dd_closed.date_key AS closed_date_key,
+        dd_due.date_key AS due_date_key,
+        dd_resolution.date_key AS resolution_action_date_key,
 
         dt.time_key AS created_time_key,
 
@@ -64,14 +66,13 @@ joined AS (
         stg.opendata_channel_type,
         stg.problem_detail,
         stg.additional_details,
+        stg.vehicle_type AS vehicle_in_complaint,
         stg.resolution_description,
         stg.latitude,
         stg.longitude,
 
         stg.created_date,
         stg.closed_date,
-        stg.due_date,
-        stg.resolution_action_date,
 
         CASE
             WHEN stg.closed_date IS NOT NULL
@@ -99,6 +100,12 @@ joined AS (
     LEFT JOIN dim_date dd_closed
         ON CAST(stg.closed_date AS DATE) = dd_closed.full_date
 
+    LEFT JOIN dim_date dd_due
+        ON CAST(stg.due_date AS DATE) = dd_due.full_date
+
+    LEFT JOIN dim_date dd_resolution
+        ON CAST(stg.resolution_action_date AS DATE) = dd_resolution.full_date
+
     LEFT JOIN dim_time dt
         ON EXTRACT(HOUR FROM stg.created_date) = dt.hour
        AND EXTRACT(MINUTE FROM stg.created_date) = dt.minute
@@ -125,3 +132,4 @@ SELECT
     {{ dbt_utils.generate_surrogate_key(['unique_key']) }} AS request_fact_key,
     *
 FROM joined
+

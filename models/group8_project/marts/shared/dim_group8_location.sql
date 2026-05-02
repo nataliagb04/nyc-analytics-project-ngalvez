@@ -25,8 +25,14 @@ location_dimension AS (
 
     SELECT
         {{ dbt_utils.generate_surrogate_key(['city', 'borough', 'zip_code']) }} AS location_key,
-        NULLIF(TRIM(city), '') AS city,
-        NULLIF(TRIM(borough), '') AS borough,
+        CASE
+            WHEN city IS NULL THEN NULL
+            WHEN UPPER(TRIM(city)) IN ('', 'NA', 'N/A') THEN NULL
+            WHEN UPPER(TRIM(city)) = 'DEDHAM, MA' THEN NULL
+            WHEN UPPER(TRIM(city)) = 'NEW YORK CITY' THEN 'New York'
+            ELSE INITCAP(TRIM(city))
+        END AS city,
+        NULLIF(INITCAP(TRIM(borough)), '') AS borough,
         NULLIF(TRIM(zip_code), '') AS zip_code
     FROM all_locations
 
